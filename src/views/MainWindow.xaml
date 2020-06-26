@@ -1,0 +1,93 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+        x:Class="Filters.Views.MainWindow"
+        Width="980"
+        Height="600"
+        MinWidth="800"
+        MinHeight="400"
+        Title="Image Filters">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <StackPanel Grid.Row="0">
+            <Border Classes="Card"
+                    CornerRadius="0,0,5,5"
+                    Margin="0"
+                    Padding="0">
+                <StackPanel>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="0.32*" />
+                            <ColumnDefinition Width="0.36*" />
+                            <ColumnDefinition Width="0.32*" />
+                        </Grid.ColumnDefinitions>
+                        <TextBlock Classes="Heading"
+                                   Grid.Column="1"
+                                   HorizontalAlignment="Center"
+                                   Text="Image Filters" />
+                        <TextBlock Classes="Heading"
+                                   Grid.Column="2"
+                                   HorizontalAlignment="Center"
+                                   Text="Something Else" />
+                    </Grid>
+                </StackPanel>
+            </Border>
+        </StackPanel>
+        <StackPanel Grid.Row="1"
+                    VerticalAlignment="Stretch">
+            <Border Classes="Card"
+                    Padding="3">
+                <StackPanel>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="0.15*" />
+                            <ColumnDefinition Width="0.85*" />
+                        </Grid.ColumnDefinitions>
+                        <Button Grid.Column="0"
+                                Margin="10"
+                                Content="Choose Image" />
+                        <TextBlock Classes="Caption"
+                                   Grid.Column="1"
+                                   HorizontalAlignment="Left"
+                                   Margin="10"
+                                   VerticalAlignment="Center"
+                                   Text="No image selected" />
+                    </Grid>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="0.50*" />
+                            <ColumnDefinition Width="0.50*" />
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="0.90*" />
+                            <RowDefinition Height="0.10*" />
+                        </Grid.RowDefinitions>
+                        <TextBlock Grid.Column="0"
+                                   Grid.Row="0"
+                                   HorizontalAlignment="Center"
+                                   VerticalAlignment="Center"
+                                   Text="1" />
+                        <TextBlock Grid.Column="1"
+                                   Grid.Row="0"
+                                   HorizontalAlignment="Center"
+                                   VerticalAlignment="Center"
+                                   Text="2" />
+                        <TextBlock Grid.Column="0"
+                                   Grid.Row="1"
+                                   HorizontalAlignment="Center"
+                                   Text="Original Image" />
+                        <TextBlock Grid.Column="1"
+                                   Grid.Row="1"
+                                   HorizontalAlignment="Center"
+                                   Text="New Image" />
+                    </Grid>
+                </StackPanel>
+            </Border>
+        </StackPanel>
+    </Grid>
+</Window>
