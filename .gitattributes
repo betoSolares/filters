@@ -1,0 +1,26 @@
+# Auto detect text files and perform LF normalization
+* text=auto
+
+# Source code
+*.config          text eol=lf
+*.xaml              text eol=lf
+*.cs              text eol=lf diff=csharp
+*.sln             text eol=lf merge=union
+*.csproj          text eol=lf merge=union
+
+# Documentation
+*.tex             text eol=lf
+*.bib             text eol=lf
+*.md              text eol=lf
+*.txt             text eol=lf
+LICENSE           text eol=lf
+*README*          text eol=lf
+.pdf              diff=astextplain
+*.PDF             diff=astextplain
+
+# Configs
+.gitattributes    text
+.gitconfig        text
+
+# Ignore files
+*.*ignore         text
