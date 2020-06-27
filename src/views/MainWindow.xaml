@@ -3,7 +3,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
-        x:Class="Filters.Views.Main.MainWindow"
+        x:Class="Filters.Views.MainWindow"
         Width="980"
         Height="600"
         MinWidth="800"
@@ -48,16 +48,15 @@
                             <ColumnDefinition Width="0.15*" />
                             <ColumnDefinition Width="0.85*" />
                         </Grid.ColumnDefinitions>
-                        <Button Click="ChooseImage"
-                                Content="Choose Image"
-                                Grid.Column="0"
-                                Margin="10" />
+                        <Button Grid.Column="0"
+                                Margin="10"
+                                Content="Choose Image" />
                         <TextBlock Classes="Caption"
                                    Grid.Column="1"
                                    HorizontalAlignment="Left"
                                    Margin="10"
                                    VerticalAlignment="Center"
-                                   Text="{Binding Path}" />
+                                   Text="No image selected" />
                     </Grid>
                     <Grid>
                         <Grid.ColumnDefinitions>
