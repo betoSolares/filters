@@ -43,6 +43,23 @@
             <Border Classes="Card"
                     Padding="3">
                 <StackPanel>
+                    <TextBlock
+                               HorizontalAlignment="Center"
+                               Margin="5"
+                               Text="Select the way to chose the image." />
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+                        <RadioButton Content="File Chooser"
+                                     Grid.Column="0"
+                                     HorizontalAlignment="Center"
+                                     IsChecked="True" />
+                        <RadioButton Content="Manual Write"
+                                     Grid.Column="1"
+                                     HorizontalAlignment="Center" />
+                    </Grid>
                     <Grid>
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="0.15*" />
@@ -52,12 +69,10 @@
                                 Content="Choose Image"
                                 Grid.Column="0"
                                 Margin="10" />
-                        <TextBlock Classes="Caption"
-                                   Grid.Column="1"
-                                   HorizontalAlignment="Left"
-                                   Margin="10"
-                                   VerticalAlignment="Center"
-                                   Text="{Binding Path}" />
+                        <TextBox Grid.Column="1"
+                                 Margin="0,0,75,0"
+                                 VerticalAlignment="Center"
+                                 Text="{Binding Path}" />
                     </Grid>
                     <Grid>
                         <Grid.ColumnDefinitions>

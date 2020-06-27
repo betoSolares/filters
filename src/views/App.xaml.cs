@@ -27,5 +27,5 @@ namespace Filters.Views
 
             base.OnFrameworkInitializationCompleted();
         }
-   }
+    }
 }
