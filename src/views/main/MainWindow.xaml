@@ -52,13 +52,17 @@
                             <ColumnDefinition Width="*" />
                             <ColumnDefinition Width="*" />
                         </Grid.ColumnDefinitions>
-                        <RadioButton Content="File Chooser"
+                        <RadioButton Click="SelectChooseMethod"
+                                     Content="File Chooser"
                                      Grid.Column="0"
                                      HorizontalAlignment="Center"
-                                     IsChecked="True" />
-                        <RadioButton Content="Manual Write"
+                                     IsChecked="True"
+                                     Name="Chooser"/>
+                        <RadioButton Click="SelectChooseMethod"
+                                     Content="Manual Write"
                                      Grid.Column="1"
-                                     HorizontalAlignment="Center" />
+                                     HorizontalAlignment="Center"
+                                     Name="Manual"/>
                     </Grid>
                     <Grid>
                         <Grid.ColumnDefinitions>
@@ -68,8 +72,10 @@
                         <Button Click="ChooseImage"
                                 Content="Choose Image"
                                 Grid.Column="0"
+                                IsVisible="{Binding !IsManual}"
                                 Margin="10" />
                         <TextBox Grid.Column="1"
+                                 IsReadOnly="{Binding !IsManual}"
                                  Margin="0,0,75,0"
                                  VerticalAlignment="Center"
                                  Text="{Binding Path}" />
