@@ -1,15 +1,12 @@
 using Avalonia.Controls;
-using Avalonia.Interactivity;
 using Avalonia.Markup.Xaml;
-using Filters.Models;
-using System.Threading.Tasks;
 
-namespace Filters.Views.Main
+namespace Filters.Views.TopBar
 {
-    public class MainWindow : Window
+    public class TopBar : UserControl
     {
         /// <summary>Constructor</summary>
-        public MainWindow()
+        public TopBar()
         {
             InitializeComponent();
         }

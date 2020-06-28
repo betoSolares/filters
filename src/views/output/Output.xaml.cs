@@ -1,15 +1,12 @@
 using Avalonia.Controls;
-using Avalonia.Interactivity;
 using Avalonia.Markup.Xaml;
-using Filters.Models;
-using System.Threading.Tasks;
 
-namespace Filters.Views.Main
+namespace Filters.Views.Output
 {
-    public class MainWindow : Window
+    public class Output : UserControl
     {
         /// <summary>Constructor</summary>
-        public MainWindow()
+        public Output()
         {
             InitializeComponent();
         }

@@ -2,6 +2,9 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:topbar="clr-namespace:Filters.Views.TopBar"
+        xmlns:options="clr-namespace:Filters.Views.Options"
+        xmlns:output="clr-namespace:Filters.Views.Output"
         mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
         x:Class="Filters.Views.Main.MainWindow"
         Width="980"
@@ -15,99 +18,15 @@
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
         <StackPanel Grid.Row="0">
-            <Border Classes="Card"
-                    CornerRadius="0,0,5,5"
-                    Margin="0"
-                    Padding="0">
-                <StackPanel>
-                    <Grid>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="0.32*" />
-                            <ColumnDefinition Width="0.36*" />
-                            <ColumnDefinition Width="0.32*" />
-                        </Grid.ColumnDefinitions>
-                        <TextBlock Classes="Heading"
-                                   Grid.Column="1"
-                                   HorizontalAlignment="Center"
-                                   Text="Image Filters" />
-                        <TextBlock Classes="Heading"
-                                   Grid.Column="2"
-                                   HorizontalAlignment="Center"
-                                   Text="Something Else" />
-                    </Grid>
-                </StackPanel>
-            </Border>
+            <topbar:TopBar />
         </StackPanel>
         <StackPanel Grid.Row="1"
                     VerticalAlignment="Stretch">
             <Border Classes="Card"
                     Padding="3">
                 <StackPanel>
-                    <TextBlock
-                               HorizontalAlignment="Center"
-                               Margin="5"
-                               Text="Select the way to chose the image." />
-                    <Grid>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="*" />
-                            <ColumnDefinition Width="*" />
-                        </Grid.ColumnDefinitions>
-                        <RadioButton Click="SelectChooseMethod"
-                                     Content="File Chooser"
-                                     Grid.Column="0"
-                                     HorizontalAlignment="Center"
-                                     IsChecked="True"
-                                     Name="Chooser"/>
-                        <RadioButton Click="SelectChooseMethod"
-                                     Content="Manual Write"
-                                     Grid.Column="1"
-                                     HorizontalAlignment="Center"
-                                     Name="Manual"/>
-                    </Grid>
-                    <Grid>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="0.15*" />
-                            <ColumnDefinition Width="0.85*" />
-                        </Grid.ColumnDefinitions>
-                        <Button Click="ChooseImage"
-                                Content="Choose Image"
-                                Grid.Column="0"
-                                IsVisible="{Binding !IsManual}"
-                                Margin="10" />
-                        <TextBox Grid.Column="1"
-                                 IsReadOnly="{Binding !IsManual}"
-                                 Margin="0,0,75,0"
-                                 VerticalAlignment="Center"
-                                 Text="{Binding Path}" />
-                    </Grid>
-                    <Grid>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="0.50*" />
-                            <ColumnDefinition Width="0.50*" />
-                        </Grid.ColumnDefinitions>
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="0.90*" />
-                            <RowDefinition Height="0.10*" />
-                        </Grid.RowDefinitions>
-                        <TextBlock Grid.Column="0"
-                                   Grid.Row="0"
-                                   HorizontalAlignment="Center"
-                                   VerticalAlignment="Center"
-                                   Text="1" />
-                        <TextBlock Grid.Column="1"
-                                   Grid.Row="0"
-                                   HorizontalAlignment="Center"
-                                   VerticalAlignment="Center"
-                                   Text="2" />
-                        <TextBlock Grid.Column="0"
-                                   Grid.Row="1"
-                                   HorizontalAlignment="Center"
-                                   Text="Original Image" />
-                        <TextBlock Grid.Column="1"
-                                   Grid.Row="1"
-                                   HorizontalAlignment="Center"
-                                   Text="New Image" />
-                    </Grid>
+                    <options:Options />
+                    <output:Output />
                 </StackPanel>
             </Border>
         </StackPanel>
