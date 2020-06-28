@@ -1,0 +1,52 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             x:Class="Filters.Views.Options.Options">
+    <StackPanel>
+
+        <!-- Image selection method -->
+        <TextBlock
+                   HorizontalAlignment="Center"
+                   Margin="5"
+                   Text="Select the way to chose the image." />
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+            <RadioButton Click="SelectChooseMethod"
+                         Content="File Chooser"
+                         Grid.Column="0"
+                         HorizontalAlignment="Center"
+                         IsChecked="True"
+                         Name="ChooserRadio"/>
+            <RadioButton Click="SelectChooseMethod"
+                         Content="Manual Write"
+                         Grid.Column="1"
+                         HorizontalAlignment="Center"
+                         Name="ManualRadio"/>
+        </Grid>
+
+        <!-- Image path input -->
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="0.15*" />
+                <ColumnDefinition Width="0.85*" />
+            </Grid.ColumnDefinitions>
+            <Button Click="ChooseImage"
+                    Content="Choose Image"
+                    Grid.Column="0"
+                    IsVisible="{Binding !Options.IsManual}"
+                    Margin="10"
+                    Name="ChooseBtn"/>
+            <TextBox Grid.Column="1"
+                     IsReadOnly="{Binding !Options.IsManual}"
+                     Margin="75,15"
+                     Name="ImgPathTxt"
+                     VerticalAlignment="Center"
+                     Text="{Binding Options.Path}" />
+        </Grid>
+    </StackPanel>
+</UserControl>
