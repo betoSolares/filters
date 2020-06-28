@@ -46,5 +46,19 @@ namespace Filters.Views.Main
         {
             AvaloniaXamlLoader.Load(this);
         }
+
+        /// <summary>Display the controls based on the option selected</summary>
+        /// <param name="sender">The object that raised the event</param>
+        /// <param name="e">The object that is being handled</param>
+        private void SelectChooseMethod(object sender, RoutedEventArgs e)
+        {
+            RadioButton radioButton = sender as RadioButton;
+            MainWindowModel context = DataContext as MainWindowModel;
+
+            if (radioButton.Name.Equals("Manual"))
+                context.IsManual = true;
+            else
+                context.IsManual = false;
+        }
     }
 }
