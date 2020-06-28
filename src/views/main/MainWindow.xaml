@@ -2,6 +2,7 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:topbar="clr-namespace:Filters.Views.TopBar"
         xmlns:options="clr-namespace:Filters.Views.Options"
         mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
         x:Class="Filters.Views.Main.MainWindow"
@@ -16,28 +17,7 @@
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
         <StackPanel Grid.Row="0">
-            <Border Classes="Card"
-                    CornerRadius="0,0,5,5"
-                    Margin="0"
-                    Padding="0">
-                <StackPanel>
-                    <Grid>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="0.32*" />
-                            <ColumnDefinition Width="0.36*" />
-                            <ColumnDefinition Width="0.32*" />
-                        </Grid.ColumnDefinitions>
-                        <TextBlock Classes="Heading"
-                                   Grid.Column="1"
-                                   HorizontalAlignment="Center"
-                                   Text="Image Filters" />
-                        <TextBlock Classes="Heading"
-                                   Grid.Column="2"
-                                   HorizontalAlignment="Center"
-                                   Text="Something Else" />
-                    </Grid>
-                </StackPanel>
-            </Border>
+            <topbar:TopBar />
         </StackPanel>
         <StackPanel Grid.Row="1"
                     VerticalAlignment="Stretch">
