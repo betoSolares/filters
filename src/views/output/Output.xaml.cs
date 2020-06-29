@@ -20,10 +20,12 @@ namespace Filters.Views.Output
         /// <param name="e">The object that is being handled</param>
         private void GenerateNewImage(object sender, RoutedEventArgs e)
         {
+            MainWindowModel context = DataContext as MainWindowModel;
+
             if (HasValidOptions())
                 System.Console.WriteLine("GENERATE");
             else
-                System.Console.WriteLine("ERROR");
+                context.Output.ShowError = true;
         }
 
         /// <summary>Check if has valid options to applied the kernel</summary>
@@ -51,8 +53,10 @@ namespace Filters.Views.Output
                 if (!Directory.Exists(path))
                     if (File.Exists(path))
                         return true;
+                context.Output.ErrorMsg = "ERROR: Verify that the path exists and is a file";
                 return false;
             }
+            context.Output.ErrorMsg = "ERROR: Verify that the path exists and is a file";
             return false;
         }
 
@@ -65,6 +69,7 @@ namespace Filters.Views.Output
 
             if (Path.GetExtension(path).Equals(".png"))
                     return true;
+            context.Output.ErrorMsg = "ERROR: Only PNG files are allowed";
             return false;
         }
 
@@ -76,6 +81,7 @@ namespace Filters.Views.Output
             string kernel = context.Options.KernelSelected;
             Dictionary<string, double> values = context.Options.CustomMatrix;
             bool valid = true;
+            context.Output.ErrorMsg = "ERROR: Check that the values of the matrix are only numbers";
 
             if (kernel.Equals("Custom"))
             {
@@ -84,8 +90,9 @@ namespace Filters.Views.Output
                     if (item.Value < -21474 && item.Value > 21474)
                         valid = false;
                 }
+                return valid;
             }
-            return valid;
+            return true;
         }
     }
 }
