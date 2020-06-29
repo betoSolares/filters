@@ -10,5 +10,10 @@
                 HorizontalAlignment="Center"
                 Margin="5"
                 Name="GenerateBtn" />
+            <TextBox IsReadOnly="true"
+                     IsVisible="{Binding Output.ShowError}"
+                     Margin="75,5"
+                     Name="ErrorTextBox"
+                     Text="{Binding Output.ErrorMsg}" />
     </StackPanel>
 </UserControl>
