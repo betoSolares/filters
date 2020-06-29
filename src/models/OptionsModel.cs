@@ -20,6 +20,14 @@ namespace Filters.Models
             set => this.RaiseAndSetIfChanged(ref isManual, value);
         }
 
+        // The kernel selected to applied
+        private string kernelSelected;
+        public string KernelSelected
+        {
+            get => kernelSelected;
+            set => this.RaiseAndSetIfChanged(ref kernelSelected, value);
+        }
+
         // Path for the kernel image
         private string kernelImg;
         public string KernelImg
@@ -33,6 +41,7 @@ namespace Filters.Models
         {
             path = "No image. Please select one.";
             isManual = false;
+            kernelSelected = "Blurred";
             kernelImg = "/assets/Blurred.png";
         }
     }

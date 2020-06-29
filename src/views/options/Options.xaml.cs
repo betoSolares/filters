@@ -65,6 +65,7 @@ namespace Filters.Views.Options
 
             if (context != null)
             {
+                context.Options.KernelSelected = item.Name;
                 context.Options.KernelImg = item.Name;
                 ChangeImage("/assets/" + item.Name + ".png");
             }
