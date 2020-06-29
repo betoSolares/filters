@@ -68,6 +68,8 @@
             <ComboBoxItem Content="Original" Name="Original" />
             <ComboBoxItem Content="Custom" Name="Custom" />
         </ComboBox>
+
+        <!-- Custom kernel input  -->
         <WrapPanel HorizontalAlignment="Center">
             <Image Height="125"
                    Name="KernelImage"
