@@ -25,15 +25,11 @@
                     VerticalAlignment="Stretch">
             <Border Classes="Card"
                     Padding="3">
-                <StackPanel>
-                    <options:Options />
-                </StackPanel>
+                <options:Options />
             </Border>
             <Border Classes="Card"
                     Padding="3">
-                <StackPanel>
-                    <output:Output />
-                </StackPanel>
+                <output:Output />
             </Border>
         </StackPanel>
     </Grid>

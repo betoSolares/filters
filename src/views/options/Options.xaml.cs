@@ -103,5 +103,15 @@ namespace Filters.Views.Options
             else
                 context.Options.IsManual = false;
         }
+
+        /// <summary>Update the values of the custom matrix</summary>
+        /// <param name="sender">The object that raised the event</param>
+        /// <param name="e">The object that is being handled</param>
+        private void UpdateMatrix(object sender, NumericUpDownValueChangedEventArgs e)
+        {
+            NumericUpDown number = sender as NumericUpDown;
+            MainWindowModel context = DataContext as MainWindowModel;
+            context.Options.CustomMatrix[number.Name] = number.Value;
+        }
     }
 }
