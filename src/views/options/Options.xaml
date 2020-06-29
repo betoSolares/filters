@@ -7,8 +7,7 @@
     <StackPanel>
 
         <!-- Image selection method -->
-        <TextBlock
-                   HorizontalAlignment="Center"
+        <TextBlock HorizontalAlignment="Center"
                    Margin="5"
                    Text="Select the way to chose the image." />
         <Grid>
@@ -48,5 +47,25 @@
                      VerticalAlignment="Center"
                      Text="{Binding Options.Path}" />
         </Grid>
+
+        <!-- Kernel Selection -->
+        <TextBlock HorizontalAlignment="Center"
+                   Margin="5"
+                   Text="Select the kernel to apply to the image." />
+        <ComboBox HorizontalAlignment="Center"
+                  Name="Kernel"
+                  SelectedIndex="0">
+            <ComboBoxItem Content="Blurred" />
+            <ComboBoxItem Content="Enhancement" />
+            <ComboBoxItem Content="Lower Sobel" />
+            <ComboBoxItem Content="Superior Sobel" />
+            <ComboBoxItem Content="Left Sobel" />
+            <ComboBoxItem Content="Right Sobel" />
+            <ComboBoxItem Content="Outline" />
+            <ComboBoxItem Content="Sharpen" />
+            <ComboBoxItem Content="Original" />
+            <ComboBoxItem Content="Custom" />
+        </ComboBox>
+
     </StackPanel>
 </UserControl>
