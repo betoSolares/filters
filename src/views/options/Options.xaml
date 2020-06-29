@@ -53,6 +53,7 @@
                    Margin="5"
                    Text="Select the kernel to apply to the image." />
         <ComboBox HorizontalAlignment="Center"
+                  Margin="5"
                   Name="Kernel"
                   SelectedIndex="0">
             <ComboBoxItem Content="Blurred" />
@@ -66,6 +67,12 @@
             <ComboBoxItem Content="Original" />
             <ComboBoxItem Content="Custom" />
         </ComboBox>
+        <WrapPanel HorizontalAlignment="Center">
+            <Image Height="125"
+                   Source="/assets/Outline.png"
+                   HorizontalAlignment="Center"
+                   Width="500" />
+        </WrapPanel>
 
     </StackPanel>
 </UserControl>
