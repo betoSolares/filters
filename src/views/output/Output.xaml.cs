@@ -2,7 +2,7 @@ using Avalonia.Controls;
 using Avalonia.Interactivity;
 using Avalonia.Markup.Xaml;
 using Filters.Models;
-using System;
+using System.Collections.Generic;
 using System.IO;
 
 namespace Filters.Views.Output
@@ -21,9 +21,9 @@ namespace Filters.Views.Output
         private void GenerateNewImage(object sender, RoutedEventArgs e)
         {
             if (HasValidOptions())
-                Console.WriteLine("GENERATE");
+                System.Console.WriteLine("GENERATE");
             else
-                Console.WriteLine("ERROR");
+                System.Console.WriteLine("ERROR");
         }
 
         /// <summary>Check if has valid options to applied the kernel</summary>
@@ -68,9 +68,24 @@ namespace Filters.Views.Output
             return false;
         }
 
+        /// <summary>Check if the matrix has only numbers</summary>
+        /// <returns>True if the matrix is valid</returns>
         private bool ValidMatrix()
         {
-            return true;
+            MainWindowModel context = DataContext as MainWindowModel;
+            string kernel = context.Options.KernelSelected;
+            Dictionary<string, double> values = context.Options.CustomMatrix;
+            bool valid = true;
+
+            if (kernel.Equals("Custom"))
+            {
+                foreach (KeyValuePair<string, double> item in values)
+                {
+                    if (item.Value < -21474 && item.Value > 21474)
+                        valid = false;
+                }
+            }
+            return valid;
         }
     }
 }
