@@ -1,7 +1,9 @@
 using Avalonia.Controls;
 using Avalonia.Interactivity;
 using Avalonia.Markup.Xaml;
+using Avalonia.Media.Imaging;
 using Filters.Models;
+using System.IO;
 using System.Threading.Tasks;
 
 namespace Filters.Views.Options
@@ -12,6 +14,16 @@ namespace Filters.Views.Options
         public Options()
         {
             InitializeComponent();
+        }
+
+        /// <summary>Change the kernel image on the screen</summary>
+        /// <param name="img">The path of the image to show</param>
+        private void ChangeImage(string img)
+        {
+            Image image = this.FindControl<Image>("KernelImage");
+            string current = Directory.GetCurrentDirectory();
+            string target = Path.Combine(current, "src" + img);
+            image.Source = new Bitmap(target);
         }
 
         /// <summary>Let the user choose an image and put the path on screen</summary>
@@ -40,6 +52,28 @@ namespace Filters.Views.Options
             if (result.Length > 0)
                 return result[0];
             return "No image. Please select one.";
+        }
+
+        /// <summary>Change the kernel to applied to the image</summary>
+        /// <param name="sender">The object that raised the event</param>
+        /// <param name="e">The object that is being handled</param>
+        private void KernelChanged(object sender, SelectionChangedEventArgs args)
+        {
+            ComboBox comboBox = sender as ComboBox;
+            ComboBoxItem item = comboBox.SelectedItem as ComboBoxItem;
+            MainWindowModel context = DataContext as MainWindowModel;
+
+            if (context != null)
+            {
+                context.Options.KernelSelected = item.Name;
+                context.Options.KernelImg = item.Name;
+                ChangeImage("/assets/" + item.Name + ".png");
+
+                if (item.Name.Equals("Custom"))
+                    context.Options.ShowCustom = true;
+                else
+                    context.Options.ShowCustom = false;
+            }
         }
 
         /// <summary>Initialize all the components</summary>

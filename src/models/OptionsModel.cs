@@ -20,11 +20,38 @@ namespace Filters.Models
             set => this.RaiseAndSetIfChanged(ref isManual, value);
         }
 
+        // The kernel selected to applied
+        private string kernelSelected;
+        public string KernelSelected
+        {
+            get => kernelSelected;
+            set => this.RaiseAndSetIfChanged(ref kernelSelected, value);
+        }
+
+        // Path for the kernel image
+        private string kernelImg;
+        public string KernelImg
+        {
+            get => kernelImg;
+            set => this.RaiseAndSetIfChanged(ref kernelImg, value);
+        }
+
+        // Show the inputs for the custom matrix
+        private bool showCustom;
+        public bool ShowCustom
+        {
+            get => showCustom;
+            set => this.RaiseAndSetIfChanged(ref showCustom, value);
+        }
+
         /// <summary>Constructor</summary>
         public OptionsModel()
         {
             path = "No image. Please select one.";
             isManual = false;
+            kernelSelected = "Blurred";
+            kernelImg = "/assets/Blurred.png";
+            showCustom = false;
         }
     }
 }
