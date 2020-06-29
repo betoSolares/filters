@@ -22,7 +22,15 @@ namespace Filters.Views.Options
         {
             Image image = this.FindControl<Image>("KernelImage");
             string current = Directory.GetCurrentDirectory();
-            string target = Path.Combine(current, "src" + img);
+
+            string target;
+            if (current.Contains(Path.Combine("filters", "src", "bin", "Debug", "netcoreapp3.0")))
+                target = Directory.GetParent(current).Parent.Parent.FullName + img;
+            else if (current.Contains(Path.Combine("filters", "src", "bin", "Release", "netcoreapp3.0")))
+                target = Directory.GetParent(current).Parent.Parent.FullName + img;
+            else
+                target = Path.Combine(current, "src" + img);
+
             image.Source = new Bitmap(target);
         }
 
