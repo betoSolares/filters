@@ -24,3 +24,8 @@ LICENSE           text eol=lf
 
 # Ignore files
 *.*ignore         text
+
+# Images
+*.ico             binary
+*.png             binary
+*.jpg             binary
