@@ -2,8 +2,8 @@ using Avalonia.Controls;
 using Avalonia.Interactivity;
 using Avalonia.Markup.Xaml;
 using Filters.Models;
-using System.IO;
 using System;
+using System.IO;
 
 namespace Filters.Views.Output
 {
@@ -56,9 +56,16 @@ namespace Filters.Views.Output
             return false;
         }
 
+        /// <summary>Check if the file is a PNG image</summary>
+        /// <returns>True if the file is a PNG image</returns>
         private bool ValidImage()
         {
-            return true;
+            MainWindowModel context = DataContext as MainWindowModel;
+            string path = context.Options.Path;
+
+            if (Path.GetExtension(path).Equals(".png"))
+                    return true;
+            return false;
         }
 
         private bool ValidMatrix()
