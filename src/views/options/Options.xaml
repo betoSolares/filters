@@ -68,14 +68,13 @@
             <ComboBoxItem Content="Original" Name="Original" />
             <ComboBoxItem Content="Custom" Name="Custom" />
         </ComboBox>
-        <WrapPanel HorizontalAlignment="Center"
-                   IsVisible="false">
+        <WrapPanel HorizontalAlignment="Center">
             <Image Height="125"
                    Name="KernelImage"
                    HorizontalAlignment="Center"
                    Source="/assets/Blurred.png"
                    Width="500" />
-            <Grid>
+            <Grid IsVisible="{Binding Options.ShowCustom}">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="0.33*" />
                     <ColumnDefinition Width="0.33*" />

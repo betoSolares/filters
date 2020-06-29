@@ -36,6 +36,14 @@ namespace Filters.Models
             set => this.RaiseAndSetIfChanged(ref kernelImg, value);
         }
 
+        // Show the inputs for the custom matrix
+        private bool showCustom;
+        public bool ShowCustom
+        {
+            get => showCustom;
+            set => this.RaiseAndSetIfChanged(ref showCustom, value);
+        }
+
         /// <summary>Constructor</summary>
         public OptionsModel()
         {
@@ -43,6 +51,7 @@ namespace Filters.Models
             isManual = false;
             kernelSelected = "Blurred";
             kernelImg = "/assets/Blurred.png";
+            showCustom = false;
         }
     }
 }

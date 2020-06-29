@@ -68,6 +68,11 @@ namespace Filters.Views.Options
                 context.Options.KernelSelected = item.Name;
                 context.Options.KernelImg = item.Name;
                 ChangeImage("/assets/" + item.Name + ".png");
+
+                if (item.Name.Equals("Custom"))
+                    context.Options.ShowCustom = true;
+                else
+                    context.Options.ShowCustom = false;
             }
         }
 
