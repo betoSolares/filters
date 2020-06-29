@@ -94,8 +94,10 @@
                     <NumericUpDown AllowSpin="false"
                                    Maximum="2147483"
                                    Minimum="-2147483"
+                                   Name="a"
                                    ShowButtonSpinner="false"
-                                   Value="0" />
+                                   Value="0"
+                                   ValueChanged="UpdateMatrix" />
                 </WrapPanel>
                 <WrapPanel Grid.Column="1" Grid.Row="0">
                     <TextBlock Margin="5"
@@ -104,8 +106,10 @@
                     <NumericUpDown AllowSpin="false"
                                    Maximum="2147483"
                                    Minimum="-2147483"
+                                   Name="b"
                                    ShowButtonSpinner="false"
-                                   Value="0" />
+                                   Value="0"
+                                   ValueChanged="UpdateMatrix" />
                 </WrapPanel>
                 <WrapPanel Grid.Column="2" Grid.Row="0">
                     <TextBlock Margin="5"
@@ -115,7 +119,9 @@
                                    Maximum="2147483"
                                    Minimum="-2147483"
                                    ShowButtonSpinner="false"
-                                   Value="0" />
+                                   Name="c"
+                                   Value="0"
+                                   ValueChanged="UpdateMatrix" />
                 </WrapPanel>
                 <WrapPanel Grid.Column="0" Grid.Row="1">
                     <TextBlock Margin="5"
@@ -124,8 +130,10 @@
                     <NumericUpDown AllowSpin="false"
                                    Maximum="2147483"
                                    Minimum="-2147483"
+                                   Name="d"
                                    ShowButtonSpinner="false"
-                                   Value="0" />
+                                   Value="0"
+                                   ValueChanged="UpdateMatrix" />
                 </WrapPanel>
                 <WrapPanel Grid.Column="1" Grid.Row="1">
                     <TextBlock Margin="5"
@@ -134,8 +142,10 @@
                     <NumericUpDown AllowSpin="false"
                                    Maximum="2147483"
                                    Minimum="-2147483"
+                                   Name="e"
                                    ShowButtonSpinner="false"
-                                   Value="0" />
+                                   Value="0"
+                                   ValueChanged="UpdateMatrix" />
                 </WrapPanel>
                 <WrapPanel Grid.Column="2" Grid.Row="1">
                     <TextBlock Margin="5"
@@ -144,8 +154,10 @@
                     <NumericUpDown AllowSpin="false"
                                    Maximum="2147483"
                                    Minimum="-2147483"
+                                   Name="f"
                                    ShowButtonSpinner="false"
-                                   Value="0" />
+                                   Value="0"
+                                   ValueChanged="UpdateMatrix" />
                 </WrapPanel>
                 <WrapPanel Grid.Column="0" Grid.Row="2">
                     <TextBlock Margin="5"
@@ -154,8 +166,10 @@
                     <NumericUpDown AllowSpin="false"
                                    Maximum="2147483"
                                    Minimum="-2147483"
+                                   Name="g"
                                    ShowButtonSpinner="false"
-                                   Value="0" />
+                                   Value="0"
+                                   ValueChanged="UpdateMatrix" />
                 </WrapPanel>
                 <WrapPanel Grid.Column="1" Grid.Row="2">
                     <TextBlock Margin="5"
@@ -164,8 +178,10 @@
                     <NumericUpDown AllowSpin="false"
                                    Maximum="2147483"
                                    Minimum="-2147483"
+                                   Name="h"
                                    ShowButtonSpinner="false"
-                                   Value="0" />
+                                   Value="0"
+                                   ValueChanged="UpdateMatrix" />
                 </WrapPanel>
                 <WrapPanel Grid.Column="2" Grid.Row="2">
                     <TextBlock Margin="5"
@@ -174,8 +190,10 @@
                     <NumericUpDown AllowSpin="false"
                                    Maximum="2147483"
                                    Minimum="-2147483"
+                                   Name="i"
                                    ShowButtonSpinner="false"
-                                   Value="0" />
+                                   Value="0"
+                                   ValueChanged="UpdateMatrix" />
                 </WrapPanel>
             </Grid>
         </WrapPanel>
