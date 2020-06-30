@@ -4,6 +4,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
              x:Class="Filters.Views.Output.Output">
+    <!-- Animation -->
     <UserControl.Styles>
         <Style Selector="Image.Rotating">
             <Style.Animations>
@@ -19,22 +20,29 @@
             </Style.Animations>
         </Style>
     </UserControl.Styles>
+
     <StackPanel>
+        <!-- Genrate Button -->
         <Button Click="GenerateNewImage"
                 Content="Generate New Image"
                 HorizontalAlignment="Center"
                 Margin="5"
                 Name="GenerateBtn" />
-            <TextBox IsReadOnly="true"
-                     IsVisible="{Binding Output.ShowError}"
-                     Margin="75,5"
-                     Name="ErrorTextBox"
-                     Text="{Binding Output.ErrorMsg}" />
-            <Image Classes="Rotating"
-                   Height="125"
-                   Name="Loader"
-                   HorizontalAlignment="Center"
-                   Source="/assets/loader.png"
-                   Width="500" />
+
+        <!-- Error TextBox -->
+        <TextBox IsReadOnly="true"
+                 IsVisible="{Binding Output.ShowError}"
+                 Margin="75,5"
+                 Name="ErrorTextBox"
+                 Text="{Binding Output.ErrorMsg}" />
+
+        <!-- Loader -->
+        <Image Classes="Rotating"
+               Height="125"
+               IsVisible="{Binding Output.Loading}"
+               Name="Loader"
+               HorizontalAlignment="Center"
+               Source="/assets/loader.png"
+               Width="500" />
     </StackPanel>
 </UserControl>

@@ -21,11 +21,13 @@ namespace Filters.Views.Output
         private void GenerateNewImage(object sender, RoutedEventArgs e)
         {
             MainWindowModel context = DataContext as MainWindowModel;
+            context.Output.Loading = true;
 
             if (HasValidOptions())
                 System.Console.WriteLine("GENERATE");
             else
                 context.Output.ShowError = true;
+            context.Output.Loading = false;
         }
 
         /// <summary>Check if has valid options to applied the kernel</summary>
