@@ -26,7 +26,23 @@ namespace Filters.Views.Output
 
             try
             {
-                Processing processing = new Processing(path, kernel);
+                Processor processor = new Processor();
+                if (kernel.Equals("Custom"))
+                {
+                    Dictionary<string, double> values = context.Options.CustomMatrix;
+                    double[,] matrix = new double[3, 3]
+                    {
+                        { values["a"], values["b"], values["c"] },
+                        { values["d"], values["e"], values["f"] },
+                        { values["g"], values["h"], values["i"] }
+                    };
+
+                    processor.CreateNew(path, matrix);
+                }
+                else
+                {
+                    processor.CreateNew(path, kernel);
+                }
             }
             catch (Exception e)
             {
