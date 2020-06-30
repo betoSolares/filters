@@ -1,3 +1,4 @@
+using ImageProcessing.Applicator;
 using System.IO;
 
 namespace ImageProcessing
@@ -28,6 +29,8 @@ namespace ImageProcessing
         /// <param name="matrix">The custom matrix to apply</param>
         public void GenerateImages(double[,] matrix)
         {
+            KernelApplicator applicator = new KernelApplicator(Original, matrix);
+            applicator.Apply();
         }
 
         /// <summary>Get the directory to save the results</summary>
