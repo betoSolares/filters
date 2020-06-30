@@ -4,22 +4,30 @@ namespace ImageProcessing
 {
     public class Processor
     {
-        /// <summary>Create a new image applying the correct kernel </summary>
-        /// <param name="path">The path of the image</param>
+        // Properties
+        public string GrayScaled { get; private set; }
+        public string GrayScaledApplied { get; private set; }
+        public string Kernel { get; private set; }
+        public string Original {get; private set; }
+        public string OriginalApplied { get; private set; }
+
+        private readonly string savePath;
+
+        /// <summary>Constructor</summary>
+        /// <param name="path">The path of the image to use</param>
         /// <param name="kernel">The kernel to apply</param>
-        public void CreateNew(string path, string kernel)
+        public Processor(string path, string kernel)
         {
-            double[,] matrix = SetMatrix(kernel);
-            string savePath = GetSaveDirectory();
+            Kernel = kernel;
+            Original = path;
+
+            savePath = GetSaveDirectory();
         }
 
-        /// <summary>Create a new image applying a custom kernel</summary>
-        /// <param name="path">The path of the image</param>
+        /// <summary>Create a new image applying the correct matrix</summary>
         /// <param name="matrix">The custom matrix to apply</param>
-        public void CreateNew(string path, double[,] matrix)
+        public void GenerateImages(double[,] matrix)
         {
-            string kernel = "Custom";
-            string savePath = GetSaveDirectory();
         }
 
         /// <summary>Get the directory to save the results</summary>
@@ -38,98 +46,6 @@ namespace ImageProcessing
 
             Directory.CreateDirectory(save);
             return save;
-        }
-
-        /// <summary>Get the correct matrix for the kernel</summary>
-        /// <param name="kernel">The kernel to get the matrix</param>
-        /// <returns>The matrix to use</returns>
-        private double[,] SetMatrix(string kernel)
-        {
-            double[,] matrix;
-
-            if (kernel.Equals("Blurred"))
-            {
-                matrix = new double[3, 3]
-                {
-                    { 0.0625, 0.125, 0.0625 },
-                    { 0.125, 0.25, 0.125 },
-                    { 0.0625, 0.125, 0.0625 }
-                };
-            }
-            else if (kernel.Equals("Enhancement"))
-            {
-                matrix = new double[3, 3]
-                {
-                    { -2, -1, 0 },
-                    { -1, 1, 1 },
-                    { 0, 1, 2 }
-                };
-            }
-            else if (kernel.Equals("LeftS"))
-            {
-                matrix = new double[3, 3]
-                {
-                    { 1, 0, -1 },
-                    { 2, 0, -2 },
-                    { 1, 0, -1 }
-                };
-            }
-            else if (kernel.Equals("LowS"))
-            {
-                matrix = new double[3, 3]
-                {
-                    { -1, -2, -1 },
-                    { 0, 0, 0 },
-                    { 1, 2, 1}
-                };
-            }
-            else if (kernel.Equals("Original"))
-            {
-                matrix = new double[3, 3]
-                {
-                    { 0, 0, 0 },
-                    { 0, 1, 0 },
-                    { 0, 0, 0 }
-                };
-            }
-            else if (kernel.Equals("Outline"))
-            {
-                matrix = new double[3, 3]
-                {
-                    { -1, -1, -1 },
-                    { -1, 8, -1 },
-                    { -1, -1, -1 }
-                };
-            }
-            else if (kernel.Equals("RightS"))
-            {
-                matrix = new double[3, 3]
-                {
-                    { -1, 0, 1 },
-                    { -2, 0, 2 },
-                    { -1, 0, 1 }
-                };
-            }
-            else if (kernel.Equals("Sharpen"))
-            {
-                matrix = new double[3, 3]
-                {
-                    { 0, -1, 0 },
-                    { -1, 5, -1 },
-                    { 0, -1, 0 }
-                };
-            }
-            else
-            {
-                matrix = new double[3, 3]
-                {
-                    { 1, 2, 1},
-                    { 0, 0, 0 },
-                    { -1, -2, -1 }
-                };
-            }
-
-            return matrix;
         }
     }
 }

@@ -26,23 +26,25 @@ namespace Filters.Views.Output
 
             try
             {
-                Processor processor = new Processor();
+                Processor processor = new Processor(path, kernel);
+
+                double[,] matrix;
                 if (kernel.Equals("Custom"))
                 {
                     Dictionary<string, double> values = context.Options.CustomMatrix;
-                    double[,] matrix = new double[3, 3]
+                    matrix = new double[3, 3]
                     {
                         { values["a"], values["b"], values["c"] },
                         { values["d"], values["e"], values["f"] },
                         { values["g"], values["h"], values["i"] }
                     };
-
-                    processor.CreateNew(path, matrix);
                 }
                 else
                 {
-                    processor.CreateNew(path, kernel);
+                    matrix = SetMatrix(kernel);
                 }
+
+                processor.GenerateImages(matrix);
             }
             catch (Exception e)
             {
@@ -96,6 +98,98 @@ namespace Filters.Views.Output
             }
             context.Output.ErrorMsg = "ERROR: Verify that the path exists and is a file";
             return false;
+        }
+
+        /// <summary>Get the correct matrix for the kernel</summary>
+        /// <param name="kernel">The kernel to get the matrix</param>
+        /// <returns>The matrix to use</returns>
+        private double[,] SetMatrix(string kernel)
+        {
+            double[,] matrix;
+
+            if (kernel.Equals("Blurred"))
+            {
+                matrix = new double[3, 3]
+                {
+                    { 0.0625, 0.125, 0.0625 },
+                    { 0.125, 0.25, 0.125 },
+                    { 0.0625, 0.125, 0.0625 }
+                };
+            }
+            else if (kernel.Equals("Enhancement"))
+            {
+                matrix = new double[3, 3]
+                {
+                    { -2, -1, 0 },
+                    { -1, 1, 1 },
+                    { 0, 1, 2 }
+                };
+            }
+            else if (kernel.Equals("LeftS"))
+            {
+                matrix = new double[3, 3]
+                {
+                    { 1, 0, -1 },
+                    { 2, 0, -2 },
+                    { 1, 0, -1 }
+                };
+            }
+            else if (kernel.Equals("LowS"))
+            {
+                matrix = new double[3, 3]
+                {
+                    { -1, -2, -1 },
+                    { 0, 0, 0 },
+                    { 1, 2, 1}
+                };
+            }
+            else if (kernel.Equals("Original"))
+            {
+                matrix = new double[3, 3]
+                {
+                    { 0, 0, 0 },
+                    { 0, 1, 0 },
+                    { 0, 0, 0 }
+                };
+            }
+            else if (kernel.Equals("Outline"))
+            {
+                matrix = new double[3, 3]
+                {
+                    { -1, -1, -1 },
+                    { -1, 8, -1 },
+                    { -1, -1, -1 }
+                };
+            }
+            else if (kernel.Equals("RightS"))
+            {
+                matrix = new double[3, 3]
+                {
+                    { -1, 0, 1 },
+                    { -2, 0, 2 },
+                    { -1, 0, 1 }
+                };
+            }
+            else if (kernel.Equals("Sharpen"))
+            {
+                matrix = new double[3, 3]
+                {
+                    { 0, -1, 0 },
+                    { -1, 5, -1 },
+                    { 0, -1, 0 }
+                };
+            }
+            else
+            {
+                matrix = new double[3, 3]
+                {
+                    { 1, 2, 1},
+                    { 0, 0, 0 },
+                    { -1, -2, -1 }
+                };
+            }
+
+            return matrix;
         }
 
         /// <summary>Check if the file is a PNG image</summary>
