@@ -1,4 +1,6 @@
 using ImageProcessing.Applicator;
+using System.Drawing;
+using System.Drawing.Imaging;
 using System.IO;
 
 namespace ImageProcessing
@@ -13,6 +15,7 @@ namespace ImageProcessing
         public string OriginalApplied { get; private set; }
 
         private readonly string savePath;
+        private readonly string filename;
 
         /// <summary>Constructor</summary>
         /// <param name="path">The path of the image to use</param>
@@ -23,6 +26,7 @@ namespace ImageProcessing
             Original = path;
 
             savePath = GetSaveDirectory();
+            filename = Path.GetFileNameWithoutExtension(path);
         }
 
         /// <summary>Create a new image applying the correct matrix</summary>
@@ -30,7 +34,9 @@ namespace ImageProcessing
         public void GenerateImages(double[,] matrix)
         {
             KernelApplicator applicator = new KernelApplicator(Original, matrix);
-            applicator.Apply();
+            Bitmap bitmap = applicator.Apply();
+            bitmap.Save(Path.Combine(savePath, filename + "_grayscaled.png"), ImageFormat.Png);
+            System.Console.WriteLine("WORKS");
         }
 
         /// <summary>Get the directory to save the results</summary>

@@ -1,3 +1,6 @@
+using ImageProcessing.Convertion;
+using System.Drawing;
+
 namespace ImageProcessing.Applicator
 {
     public class KernelApplicator
@@ -16,8 +19,13 @@ namespace ImageProcessing.Applicator
         }
 
         /// <summary>Apply the kernel to the image</summary>
-        public void Apply()
+        /// <returns>The list with the bitmaps generated</returns>
+        public Bitmap Apply()
         {
+            Converter converter = new Converter();
+            Bitmap original = new Bitmap(path);
+            Bitmap grayscaled = converter.FromColorToGray(original);
+            return grayscaled;
         }
     }
 }
