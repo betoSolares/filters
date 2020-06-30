@@ -4,6 +4,21 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
              x:Class="Filters.Views.Output.Output">
+    <UserControl.Styles>
+        <Style Selector="Image.Rotating">
+            <Style.Animations>
+              <Animation Duration="0:0:4"
+                         IterationCount="Infinite">
+                <KeyFrame Cue="0%">
+                  <Setter Property="RotateTransform.Angle" Value="0" />
+                </KeyFrame>
+                <KeyFrame Cue="100%">
+                  <Setter Property="RotateTransform.Angle" Value="360" />
+                </KeyFrame>
+              </Animation>
+            </Style.Animations>
+        </Style>
+    </UserControl.Styles>
     <StackPanel>
         <Button Click="GenerateNewImage"
                 Content="Generate New Image"
@@ -15,5 +30,11 @@
                      Margin="75,5"
                      Name="ErrorTextBox"
                      Text="{Binding Output.ErrorMsg}" />
+            <Image Classes="Rotating"
+                   Height="125"
+                   Name="Loader"
+                   HorizontalAlignment="Center"
+                   Source="/assets/loader.png"
+                   Width="500" />
     </StackPanel>
 </UserControl>
