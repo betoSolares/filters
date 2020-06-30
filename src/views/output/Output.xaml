@@ -4,6 +4,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
              x:Class="Filters.Views.Output.Output">
+
     <!-- Animation -->
     <UserControl.Styles>
         <Style Selector="Image.Rotating">
@@ -45,4 +46,5 @@
                Source="/assets/loader.png"
                Width="500" />
     </StackPanel>
+
 </UserControl>
