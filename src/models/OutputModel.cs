@@ -21,11 +21,20 @@ namespace Filters.Models
             set => this.RaiseAndSetIfChanged(ref errorMsg, value);
         }
 
+        // Show the spinner loader
+        private bool loading;
+        public bool Loading
+        {
+            get => loading;
+            set => this.RaiseAndSetIfChanged(ref loading, value);
+        }
+
         /// <summary>Constructor</summary>
         public OutputModel()
         {
             showError = false;
             errorMsg = "ERROR: Not a valid file";
+            loading = false;
         }
     }
 }
