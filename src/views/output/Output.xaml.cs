@@ -2,6 +2,8 @@ using Avalonia.Controls;
 using Avalonia.Interactivity;
 using Avalonia.Markup.Xaml;
 using Filters.Models;
+using ImageProcessing;
+using System;
 using System.Collections.Generic;
 using System.IO;
 
@@ -15,7 +17,25 @@ namespace Filters.Views.Output
             InitializeComponent();
         }
 
-        /// <summary>Applied the kernel to the image</summary>
+        /// <summary>Try to applied the kernel to the image</summary>
+        private void ApplyKernel()
+        {
+            MainWindowModel context = DataContext as MainWindowModel;
+            string path = context.Options.Path;
+            string kernel = context.Options.KernelSelected;
+
+            try
+            {
+                Processing processing = new Processing(path, kernel);
+            }
+            catch (Exception e)
+            {
+                context.Output.ShowError = true;
+                context.Output.ErrorMsg = "An unexpected error occurred: " + e.Message;
+            }
+        }
+
+        /// <summary>Validate the options and create the new image</summary>
         /// <param name="sender">The object that raised the event</param>
         /// <param name="e">The object that is being handled</param>
         private void GenerateNewImage(object sender, RoutedEventArgs e)
@@ -24,7 +44,7 @@ namespace Filters.Views.Output
             context.Output.Loading = true;
 
             if (HasValidOptions())
-                System.Console.WriteLine("GENERATE");
+                ApplyKernel();
             else
                 context.Output.ShowError = true;
             context.Output.Loading = false;
