@@ -34,9 +34,9 @@ namespace ImageProcessing.Applicator
         /// <summary>Apply the kernel to the bitmap</summary>
         /// <param name="bitmap">The bitmap to apply the kernel</param>
         /// <returns>A new matrix with the values</returns>
-        private int[,] ApplyKernel(Bitmap bitmap)
+        private double[,] ApplyKernel(Bitmap bitmap)
         {
-            int[,] result = new int[bitmap.Width, bitmap.Height];
+            double[,] result = new double[bitmap.Width, bitmap.Height];
 
             for (int y = 0; y < bitmap.Height; y++)
             {
@@ -54,7 +54,7 @@ namespace ImageProcessing.Applicator
 
                             while (cont_x < 3)
                             {
-                                int average = GetAverage(bitmap, x + cont_x, y + cont_y);
+                                double average = GetAverage(bitmap, x + cont_x, y + cont_y);
                                 newValue += (average * matrix[cont_x, cont_y]);
                                 cont_x++;
                             }
@@ -62,8 +62,7 @@ namespace ImageProcessing.Applicator
                             cont_y++;
                         }
 
-                        int value = Convert.ToInt32(newValue);
-                        result[x + 1, y + 1] = value;
+                        result[x + 1, y + 1] = newValue;
                     }
                 }
             }
@@ -75,15 +74,15 @@ namespace ImageProcessing.Applicator
         /// <param name="bitmap">The bitmap to apply the image</param>
         private void ApplyAndNormalize(Bitmap bitmap)
         {
-            int[,] matrix = ApplyKernel(bitmap);
-            int[,] fixedBorders = FixBorders(bitmap, matrix);
+            double[,] matrix = ApplyKernel(bitmap);
+            double[,] fixedBorders = FixBorders(bitmap, matrix);
         }
 
         /// <summary>Fix the border issue</summary>
         /// <param name="bitmap">The original bitmap to get the values</param>
         /// <param name="values">The matrix containing the new values to save the borders</param>
         /// <returns>A new matrix with the borders and values for the new bitmap</returns>
-        private int[,] FixBorders(Bitmap bitmap, int[,] values)
+        private double[,] FixBorders(Bitmap bitmap, double[,] values)
         {
             int width = bitmap.Width;
             int height = bitmap.Height;
@@ -91,8 +90,8 @@ namespace ImageProcessing.Applicator
             /* Top and bottom border */
             for (int x = 0; x < width; x++)
             {
-                int[,] multiplyTop = new int[3, 3];
-                int[,] multiplyBottom = new int[3, 3];
+                double[,] multiplyTop = new double[3, 3];
+                double[,] multiplyBottom = new double[3, 3];
 
                 if (x == 0)
                 {
@@ -146,8 +145,8 @@ namespace ImageProcessing.Applicator
             /* Left and right border */
             for (int y = 1; y < height - 1; y++)
             {
-                int[,] multiplyLeft = new int[3, 3];
-                int[,] multiplyRight = new int[3, 3];
+                double[,] multiplyLeft = new double[3, 3];
+                double[,] multiplyRight = new double[3, 3];
 
                 multiplyLeft[0, 0] = multiplyLeft[1, 0] = GetAverage(bitmap, 0, y - 1);
                 multiplyLeft[0, 1] = multiplyLeft[1, 1] = GetAverage(bitmap, 0, y);
@@ -175,17 +174,17 @@ namespace ImageProcessing.Applicator
         /// <param name="x">The x position of the pixel</param>
         /// <param name="y">The y position of the pixel</param>
         /// <returns>The average value from the pixel</returns>
-        private int GetAverage(Bitmap bitmap, int x, int y)
+        private double GetAverage(Bitmap bitmap, int x, int y)
         {
             Color pixel = bitmap.GetPixel(x, y);
-            int value = (pixel.R + pixel.G + pixel.B) / 3;
+            double value = (pixel.R + pixel.G + pixel.B) / 3;
             return value;
         }
 
         /// <summary>Get the new central value</summary>
         /// <param name="multiplyValues">The matrix to get the central value</param>
         /// <returns>The new value for the matrix</returns>
-        private int GetCentralValue(int[,] multiplyValues)
+        private double GetCentralValue(double[,] multiplyValues)
         {
             double value = 0;
 
@@ -197,7 +196,7 @@ namespace ImageProcessing.Applicator
                 }
             }
 
-            return Convert.ToInt32(value);
+            return value;
         }
     }
 }
