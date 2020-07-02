@@ -71,19 +71,12 @@ namespace ImageProcessing.Applicator
             return result;
         }
 
+        /// <summary>Apply the kernel and normalize the bitmap</summary>
+        /// <param name="bitmap">The bitmap to apply the image</param>
         private void ApplyAndNormalize(Bitmap bitmap)
         {
             int[,] matrix = ApplyKernel(bitmap);
             int[,] fixedBorders = FixBorders(bitmap, matrix);
-
-            for (int y = 0; y < bitmap.Height; y++)
-            {
-                for (int x = 0; x < bitmap.Width; x++)
-                {
-                    System.Console.Write(fixedBorders[x, y] + "  ");
-                }
-                System.Console.WriteLine("\n#############################################\n");
-            }
         }
 
         /// <summary>Fix the border issue</summary>
@@ -147,7 +140,31 @@ namespace ImageProcessing.Applicator
                 }
 
                 values[x, 0] = GetCentralValue(multiplyTop);
-                values[x, bitmap.Height - 1] = GetCentralValue(multiplyBottom);
+                values[x, height - 1] = GetCentralValue(multiplyBottom);
+            }
+
+            /* Left and right border */
+            for (int y = 1; y < height - 1; y++)
+            {
+                int[,] multiplyLeft = new int[3, 3];
+                int[,] multiplyRight = new int[3, 3];
+
+                multiplyLeft[0, 0] = multiplyLeft[1, 0] = GetAverage(bitmap, 0, y - 1);
+                multiplyLeft[0, 1] = multiplyLeft[1, 1] = GetAverage(bitmap, 0, y);
+                multiplyLeft[0, 2] = multiplyLeft[1, 2] = GetAverage(bitmap, 0, y + 1);
+                multiplyLeft[2, 0] = GetAverage(bitmap, 1, y - 1);
+                multiplyLeft[2, 1] = GetAverage(bitmap, 1, y);
+                multiplyLeft[2, 2] = GetAverage(bitmap, 1, y + 1);
+
+                multiplyRight[1, 0] = multiplyRight[2, 0] = GetAverage(bitmap, width - 1, y - 1);
+                multiplyRight[1, 1] = multiplyRight[2, 1] = GetAverage(bitmap, width - 1, y);
+                multiplyRight[1, 2] = multiplyRight[2, 2] = GetAverage(bitmap, width - 1, y + 1);
+                multiplyRight[0, 0] = GetAverage(bitmap, width - 2, y - 1);
+                multiplyRight[0, 1] = GetAverage(bitmap, width - 2, y);
+                multiplyRight[0, 2] = GetAverage(bitmap, width - 2, y + 1);
+
+                values[0, y] = GetCentralValue(multiplyLeft);
+                values[width - 1, y] = GetCentralValue(multiplyRight);
             }
 
             return values;
