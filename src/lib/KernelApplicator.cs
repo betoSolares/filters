@@ -76,6 +76,16 @@ namespace ImageProcessing.Applicator
         {
             double[,] matrix = ApplyKernel(bitmap);
             double[,] fixedBorders = FixBorders(bitmap, matrix);
+            double[,] normalized = Normalize(fixedBorders);
+
+            for (int y = 0; y < bitmap.Height; y++)
+            {
+                for (int x = 0; x < bitmap.Width; x++)
+                {
+                    System.Console.Write(normalized[x, y] + " ");
+                }
+                System.Console.WriteLine("\n################################################");
+            }
         }
 
         /// <summary>Fix the border issue</summary>
@@ -197,6 +207,40 @@ namespace ImageProcessing.Applicator
             }
 
             return value;
+        }
+
+        /// <summary>Normalize the values inside the matrix</summary>
+        /// <param name="values">The matrix to normalize</param>
+        /// <returns>A new matrix with the values normalized</returns>
+        private double[,] Normalize(double[,] values)
+        {
+            double[,] normalized = new double[values.GetLength(0), values.GetLength(1)];
+
+            /* Get min and max value */
+            double min = values[0, 0];
+            double max = values[0, 0];
+
+            for (int y = 0; y < values.GetLength(1); y++)
+            {
+                for (int x = 0; x < values.GetLength(0); x++)
+                {
+                    if (values[x, y] > max)
+                        max = values[x, y];
+                    else if (values[x, y] < min)
+                        min = values[x, y];
+                }
+            }
+
+            /* Normalize the matrix */
+            for (int y = 0; y < values.GetLength(1); y++)
+            {
+                for (int x = 0; x < values.GetLength(0); x++)
+                {
+                    normalized[x, y] = values[x, y] / (max - min);
+                }
+            }
+
+            return normalized;
         }
     }
 }
