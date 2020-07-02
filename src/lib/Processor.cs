@@ -34,8 +34,15 @@ namespace ImageProcessing
         public void GenerateImages(double[,] matrix)
         {
             KernelApplicator applicator = new KernelApplicator(Original, matrix);
-            Bitmap bitmap = applicator.Apply();
-            bitmap.Save(Path.Combine(savePath, filename + "_grayscaled.png"), ImageFormat.Png);
+            (Bitmap gray, Bitmap applied) bitmaps = applicator.Apply();
+
+            string grayPath = Path.Combine(savePath, filename + "_grayscaled.png");
+            GrayScaled = grayPath;
+            bitmaps.gray.Save(grayPath, ImageFormat.Png);
+
+            string appliedPath = Path.Combine(savePath, filename + "_" + Kernel + ".png");
+            GrayScaledApplied = appliedPath;
+            bitmaps.applied.Save(appliedPath, ImageFormat.Png);
             System.Console.WriteLine("WORKS");
         }
 

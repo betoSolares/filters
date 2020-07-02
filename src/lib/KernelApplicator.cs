@@ -21,22 +21,22 @@ namespace ImageProcessing.Applicator
 
         /// <summary>Apply the kernel to the image</summary>
         /// <returns>The list with the bitmaps generated</returns>
-        public Bitmap Apply()
+        public (Bitmap gray, Bitmap applied) Apply()
         {
             Converter converter = new Converter();
             Bitmap original = new Bitmap(path);
 
             Bitmap grayscaled = converter.FromColorToGray(original);
             double[,] toConvert = ApplyAndNormalize(grayscaled);
-            Bitmap applied = converter.MatrixToBitmap(toConvert);
-            return grayscaled;
-        }
+            Bitmap applied = converter.MatrixToBitmap(grayscaled, toConvert, GetMinMaxValues(toConvert));
 
+            return (grayscaled, applied);
+        }
 
         /// <summary>Apply the kernel and normalize the bitmap</summary>
         /// <param name="bitmap">The bitmap to apply the image</param>
         /// <returns>The matrix to convert to bitmap</returns>
-        private double ApplyAndNormalize(Bitmap bitmap)
+        private double[,] ApplyAndNormalize(Bitmap bitmap)
         {
             double[,] matrix = GetInnerValues(bitmap);
             matrix = FixBorders(bitmap, matrix);
@@ -204,14 +204,11 @@ namespace ImageProcessing.Applicator
             return result;
         }
 
-        /// <summary>Normalize the values inside the matrix</summary>
-        /// <param name="values">The matrix to normalize</param>
-        /// <returns>A new matrix with the values normalized</returns>
-        private double[,] Normalize(double[,] values)
+        /// <summary>Get the min and max values in the matrix</summary>
+        /// <param name="values">The matrix to get the values</param>
+        /// <returns>The minimum and maximum values in the matrix</returns>
+        private (double min, double max) GetMinMaxValues(double[,] values)
         {
-            double[,] normalized = new double[values.GetLength(0), values.GetLength(1)];
-
-            /* Get min and max value */
             double min = values[0, 0];
             double max = values[0, 0];
 
@@ -226,12 +223,22 @@ namespace ImageProcessing.Applicator
                 }
             }
 
-            /* Normalize the matrix */
+            return (min, max);
+        }
+
+        /// <summary>Normalize the values inside the matrix</summary>
+        /// <param name="values">The matrix to normalize</param>
+        /// <returns>A new matrix with the values normalized</returns>
+        private double[,] Normalize(double[,] values)
+        {
+            double[,] normalized = new double[values.GetLength(0), values.GetLength(1)];
+            (double min, double max) limits = GetMinMaxValues(values);
+
             for (int y = 0; y < values.GetLength(1); y++)
             {
                 for (int x = 0; x < values.GetLength(0); x++)
                 {
-                    normalized[x, y] = values[x, y] / (max - min);
+                    normalized[x, y] = values[x, y] / (limits.max - limits.min);
                 }
             }
 

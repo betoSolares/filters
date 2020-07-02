@@ -24,8 +24,6 @@ namespace Filters.Views.Output
             string path = context.Options.Path;
             string kernel = context.Options.KernelSelected;
 
-            try
-            {
                 Processor processor = new Processor(path, kernel);
 
                 double[,] matrix;
@@ -45,12 +43,6 @@ namespace Filters.Views.Output
                 }
 
                 processor.GenerateImages(matrix);
-            }
-            catch (Exception e)
-            {
-                context.Output.ShowError = true;
-                context.Output.ErrorMsg = "An unexpected error occurred: " + e.Message;
-            }
         }
 
         /// <summary>Validate the options and create the new image</summary>
