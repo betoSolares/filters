@@ -27,65 +27,21 @@ namespace ImageProcessing.Applicator
             Bitmap original = new Bitmap(path);
 
             Bitmap grayscaled = converter.FromColorToGray(original);
-            ApplyAndNormalize(grayscaled);
+            double[,] toConvert = ApplyAndNormalize(grayscaled);
+            Bitmap applied = converter.MatrixToBitmap(toConvert);
             return grayscaled;
         }
 
-        /// <summary>Apply the kernel to the bitmap</summary>
-        /// <param name="bitmap">The bitmap to apply the kernel</param>
-        /// <returns>A new matrix with the values</returns>
-        private double[,] ApplyKernel(Bitmap bitmap)
-        {
-            double[,] result = new double[bitmap.Width, bitmap.Height];
-
-            for (int y = 0; y < bitmap.Height; y++)
-            {
-                for (int x = 0; x < bitmap.Width; x++)
-                {
-                    double newValue = 0;
-
-                    if ((x + 2 < bitmap.Width) && (y + 2 < bitmap.Height))
-                    {
-                        int cont_y = 0;
-
-                        while (cont_y < 3)
-                        {
-                            int cont_x = 0;
-
-                            while (cont_x < 3)
-                            {
-                                double average = GetAverage(bitmap, x + cont_x, y + cont_y);
-                                newValue += (average * matrix[cont_x, cont_y]);
-                                cont_x++;
-                            }
-
-                            cont_y++;
-                        }
-
-                        result[x + 1, y + 1] = newValue;
-                    }
-                }
-            }
-
-            return result;
-        }
 
         /// <summary>Apply the kernel and normalize the bitmap</summary>
         /// <param name="bitmap">The bitmap to apply the image</param>
-        private void ApplyAndNormalize(Bitmap bitmap)
+        /// <returns>The matrix to convert to bitmap</returns>
+        private double ApplyAndNormalize(Bitmap bitmap)
         {
-            double[,] matrix = ApplyKernel(bitmap);
-            double[,] fixedBorders = FixBorders(bitmap, matrix);
-            double[,] normalized = Normalize(fixedBorders);
-
-            for (int y = 0; y < bitmap.Height; y++)
-            {
-                for (int x = 0; x < bitmap.Width; x++)
-                {
-                    System.Console.Write(normalized[x, y] + " ");
-                }
-                System.Console.WriteLine("\n################################################");
-            }
+            double[,] matrix = GetInnerValues(bitmap);
+            matrix = FixBorders(bitmap, matrix);
+            matrix = Normalize(matrix);
+            return matrix;
         }
 
         /// <summary>Fix the border issue</summary>
@@ -207,6 +163,45 @@ namespace ImageProcessing.Applicator
             }
 
             return value;
+        }
+
+        /// <summary>Apply the kernel to the bitmap and get the inner values</summary>
+        /// <param name="bitmap">The bitmap to apply the kernel</param>
+        /// <returns>A new matrix with the values</returns>
+        private double[,] GetInnerValues(Bitmap bitmap)
+        {
+            double[,] result = new double[bitmap.Width, bitmap.Height];
+
+            for (int y = 0; y < bitmap.Height; y++)
+            {
+                for (int x = 0; x < bitmap.Width; x++)
+                {
+                    double newValue = 0;
+
+                    if ((x + 2 < bitmap.Width) && (y + 2 < bitmap.Height))
+                    {
+                        int cont_y = 0;
+
+                        while (cont_y < 3)
+                        {
+                            int cont_x = 0;
+
+                            while (cont_x < 3)
+                            {
+                                double average = GetAverage(bitmap, x + cont_x, y + cont_y);
+                                newValue += (average * matrix[cont_x, cont_y]);
+                                cont_x++;
+                            }
+
+                            cont_y++;
+                        }
+
+                        result[x + 1, y + 1] = newValue;
+                    }
+                }
+            }
+
+            return result;
         }
 
         /// <summary>Normalize the values inside the matrix</summary>
