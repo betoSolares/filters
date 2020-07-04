@@ -93,6 +93,15 @@
                    Width="500" />
 
         </Grid>
+
+        <!-- Path message -->
+        <TextBlock Grid.Column="0"
+                   Grid.Row="0"
+                   HorizontalAlignment="Center"
+                   IsVisible="{Binding Output.ShowResult}"
+                   Margin="5"
+                   Text="{Binding Output.Path}" />
+
     </StackPanel>
 
 </UserControl>

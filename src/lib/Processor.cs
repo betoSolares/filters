@@ -11,9 +11,9 @@ namespace ImageProcessing
         public string Applied { get; private set; }
         public string GrayScaled { get; private set; }
         public string Kernel { get; private set; }
-        public string Original {get; private set; }
+        public string Original { get; private set; }
+        public string SavePath { get; private set; }
 
-        private readonly string savePath;
         private readonly string filename;
 
         /// <summary>Constructor</summary>
@@ -24,7 +24,7 @@ namespace ImageProcessing
             Kernel = kernel;
             Original = path;
 
-            savePath = GetSaveDirectory();
+            SavePath = GetSaveDirectory();
             filename = Path.GetFileNameWithoutExtension(path);
         }
 
@@ -35,11 +35,11 @@ namespace ImageProcessing
             KernelApplicator applicator = new KernelApplicator(Original, matrix);
             (Bitmap gray, Bitmap applied) bitmaps = applicator.Apply();
 
-            string grayPath = Path.Combine(savePath, filename + "_grayscaled.png");
+            string grayPath = Path.Combine(SavePath, filename + "_grayscaled.png");
             GrayScaled = grayPath;
             bitmaps.gray.Save(grayPath, ImageFormat.Png);
 
-            string appliedPath = Path.Combine(savePath, filename + "_" + Kernel + ".png");
+            string appliedPath = Path.Combine(SavePath, filename + "_" + Kernel + ".png");
             Applied = appliedPath;
             bitmaps.applied.Save(appliedPath, ImageFormat.Png);
         }

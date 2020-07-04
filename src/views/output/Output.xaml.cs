@@ -19,43 +19,49 @@ namespace Filters.Views.Output
         }
 
         /// <summary>Try to applied the kernel to the image</summary>
+        /// <returns>The path where the images are stored</returns>
         private void ApplyKernel()
         {
             MainWindowModel context = DataContext as MainWindowModel;
             string path = context.Options.Path;
             string kernel = context.Options.KernelSelected;
 
-                Processor processor = new Processor(path, kernel);
+            Processor processor = new Processor(path, kernel);
 
-                try
+            try
+            {
+                double[,] matrix;
+                if (kernel.Equals("Custom"))
                 {
-                    double[,] matrix;
-                    if (kernel.Equals("Custom"))
+                    Dictionary<string, double> values = context.Options.CustomMatrix;
+                    matrix = new double[3, 3]
                     {
-                        Dictionary<string, double> values = context.Options.CustomMatrix;
-                        matrix = new double[3, 3]
-                        {
-                            { values["a"], values["b"], values["c"] },
-                            { values["d"], values["e"], values["f"] },
-                            { values["g"], values["h"], values["i"] }
-                        };
-                    }
-                    else
-                    {
-                        matrix = SetMatrix(kernel);
-                    }
-
-                    processor.GenerateImages(matrix);
-
-                    ChangeImage("OriginalImg", processor.Original);
-                    ChangeImage("GrayScaledImg", processor.GrayScaled);
-                    ChangeImage("ResultImg", processor.Applied);
+                        { values["a"], values["b"], values["c"] },
+                        { values["d"], values["e"], values["f"] },
+                        { values["g"], values["h"], values["i"] }
+                    };
                 }
-                catch (Exception e)
+                else
                 {
-                    context.Output.ErrorMsg = "An un expected error ocurred: " + e.Message;
-                    context.Output.ShowError = true;
+                    matrix = SetMatrix(kernel);
                 }
+
+                processor.GenerateImages(matrix);
+
+                ChangeImage("OriginalImg", processor.Original);
+                ChangeImage("GrayScaledImg", processor.GrayScaled);
+                ChangeImage("ResultImg", processor.Applied);
+
+                context.Output.Path = "The results are stores on the directory: " + processor.SavePath;
+                context.Output.Loading = false;
+                context.Output.ShowResult = true;
+            }
+            catch (Exception e)
+            {
+                context.Output.ErrorMsg = "An un expected error ocurred: " + e.Message;
+                context.Output.Loading = false;
+                context.Output.ShowError = true;
+            }
         }
 
         /// <summary>Change the image on the screen</summary>
@@ -78,16 +84,9 @@ namespace Filters.Views.Output
             context.Output.ShowError = false;
 
             if (HasValidOptions())
-            {
                 ApplyKernel();
-                context.Output.Loading = false;
-                context.Output.ShowResult = true;
-            }
             else
-            {
-                context.Output.Loading = false;
                 context.Output.ShowError = true;
-            }
         }
 
         /// <summary>Check if has valid options to applied the kernel</summary>

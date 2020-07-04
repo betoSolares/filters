@@ -29,12 +29,20 @@ namespace Filters.Models
             set => this.RaiseAndSetIfChanged(ref loading, value);
         }
 
-        // Show the spinner loader
+        // Show the results
         private bool showResult;
         public bool ShowResult
         {
             get => showResult;
             set => this.RaiseAndSetIfChanged(ref showResult, value);
+        }
+
+        // Show the path where the results are saved
+        private string path;
+        public string Path
+        {
+            get => path;
+            set => this.RaiseAndSetIfChanged(ref path, value);
         }
 
         /// <summary>Constructor</summary>
@@ -44,6 +52,7 @@ namespace Filters.Models
             errorMsg = "ERROR: Not a valid file";
             loading = false;
             showResult = false;
+            path = "No path yet";
         }
     }
 }
