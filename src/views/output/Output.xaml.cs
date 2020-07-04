@@ -1,6 +1,7 @@
 using Avalonia.Controls;
 using Avalonia.Interactivity;
 using Avalonia.Markup.Xaml;
+using Avalonia.Media.Imaging;
 using Filters.Models;
 using ImageProcessing;
 using System;
@@ -45,12 +46,25 @@ namespace Filters.Views.Output
                     }
 
                     processor.GenerateImages(matrix);
+
+                    ChangeImage("OriginalImg", processor.Original);
+                    ChangeImage("GrayScaledImg", processor.GrayScaled);
+                    ChangeImage("ResultImg", processor.Applied);
                 }
                 catch (Exception e)
                 {
                     context.Output.ErrorMsg = "An un expected error ocurred: " + e.Message;
                     context.Output.ShowError = true;
                 }
+        }
+
+        /// <summary>Change the image on the screen</summary>
+        /// <param name="name">The name of the component for the image</param>
+        /// <param name="img">The path of the image to show</param>
+        private void ChangeImage(string name, string img)
+        {
+            Image image = this.FindControl<Image>(name);
+            image.Source = new Bitmap(img);
         }
 
         /// <summary>Validate the options and create the new image</summary>
