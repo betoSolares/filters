@@ -6,6 +6,7 @@
         xmlns:options="clr-namespace:Filters.Views.Options"
         xmlns:output="clr-namespace:Filters.Views.Output"
         mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+        Background="{DynamicResource ThemeBackgroundColor}"
         x:Class="Filters.Views.Main.MainWindow"
         Width="980"
         Height="700"
