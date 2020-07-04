@@ -8,11 +8,10 @@ namespace ImageProcessing
     public class Processor
     {
         // Properties
+        public string Applied { get; private set; }
         public string GrayScaled { get; private set; }
-        public string GrayScaledApplied { get; private set; }
         public string Kernel { get; private set; }
         public string Original {get; private set; }
-        public string OriginalApplied { get; private set; }
 
         private readonly string savePath;
         private readonly string filename;
@@ -41,9 +40,8 @@ namespace ImageProcessing
             bitmaps.gray.Save(grayPath, ImageFormat.Png);
 
             string appliedPath = Path.Combine(savePath, filename + "_" + Kernel + ".png");
-            GrayScaledApplied = appliedPath;
+            Applied = appliedPath;
             bitmaps.applied.Save(appliedPath, ImageFormat.Png);
-            System.Console.WriteLine("WORKS");
         }
 
         /// <summary>Get the directory to save the results</summary>
