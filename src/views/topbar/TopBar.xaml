@@ -15,14 +15,22 @@
                     <ColumnDefinition Width="0.36*" />
                     <ColumnDefinition Width="0.32*" />
                 </Grid.ColumnDefinitions>
+
+                <!-- Heading -->
                 <TextBlock Classes="Heading"
                            Grid.Column="1"
                            HorizontalAlignment="Center"
-                           Text="Image Filters" />
-                <TextBlock Classes="Heading"
-                           Grid.Column="2"
-                           HorizontalAlignment="Center"
-                           Text="Something Else" />
+                           Text="Image Filters"
+                           VerticalAlignment="Center" />
+
+                <!-- Change Theme Button -->
+                <Button Click="ChangeTheme"
+                        Content="Change Theme"
+                        Grid.Column="2"
+                        HorizontalAlignment="Center"
+                        Name="ChangeThemeBtn"
+                        Padding="3" />
+
             </Grid>
         </StackPanel>
     </Border>
