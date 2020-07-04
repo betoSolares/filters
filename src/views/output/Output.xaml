@@ -4,6 +4,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
              x:Class="Filters.Views.Output.Output">
+
     <!-- Animation -->
     <UserControl.Styles>
         <Style Selector="Image.Rotating">
@@ -37,12 +38,70 @@
                  Text="{Binding Output.ErrorMsg}" />
 
         <!-- Loader -->
-        <Image Classes="Rotating"
-               Height="125"
-               IsVisible="{Binding Output.Loading}"
-               Name="Loader"
-               HorizontalAlignment="Center"
-               Source="/assets/loader.png"
-               Width="500" />
+        <TextBlock HorizontalAlignment="Center"
+                   IsVisible="{Binding Output.Loading}"
+                   Name="Loader"
+                   Text="Loading" />
+
+
+        <!-- Results -->
+        <Grid IsVisible="{Binding Output.ShowResult}">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="0.32*" />
+                <ColumnDefinition Width="0.36*" />
+                <ColumnDefinition Width="0.32*" />
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="0.15*" />
+                <RowDefinition Height="0.85*" />
+            </Grid.RowDefinitions>
+
+            <!-- Orignal -->
+            <TextBlock Grid.Column="0"
+                       Grid.Row="0"
+                       HorizontalAlignment="Center"
+                       Text="Original" />
+            <Image Grid.Column="0"
+                   Grid.Row="1"
+                   Height="125"
+                   Name="OriginalImg"
+                   Source="/assets/unknown.png"
+                   Width="500" />
+
+            <!-- Gray -->
+            <TextBlock Grid.Column="1"
+                       Grid.Row="0"
+                       HorizontalAlignment="Center"
+                       Text="GrayScaled" />
+            <Image Grid.Column="1"
+                   Grid.Row="1"
+                   Height="125"
+                   Name="GrayScaledImg"
+                   Source="/assets/unknown.png"
+                   Width="500" />
+
+            <!-- Result -->
+            <TextBlock Grid.Column="2"
+                       Grid.Row="0"
+                       HorizontalAlignment="Center"
+                       Text="Result" />
+            <Image Grid.Column="2"
+                   Grid.Row="1"
+                   Height="125"
+                   Name="ResultImg"
+                   Source="/assets/unknown.png"
+                   Width="500" />
+
+        </Grid>
+
+        <!-- Path message -->
+        <TextBlock Grid.Column="0"
+                   Grid.Row="0"
+                   HorizontalAlignment="Center"
+                   IsVisible="{Binding Output.ShowResult}"
+                   Margin="5"
+                   Text="{Binding Output.Path}" />
+
     </StackPanel>
+
 </UserControl>

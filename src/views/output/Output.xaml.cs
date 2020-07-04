@@ -1,7 +1,10 @@
 using Avalonia.Controls;
 using Avalonia.Interactivity;
 using Avalonia.Markup.Xaml;
+using Avalonia.Media.Imaging;
 using Filters.Models;
+using ImageProcessing;
+using System;
 using System.Collections.Generic;
 using System.IO;
 
@@ -15,19 +18,75 @@ namespace Filters.Views.Output
             InitializeComponent();
         }
 
-        /// <summary>Applied the kernel to the image</summary>
+        /// <summary>Try to applied the kernel to the image</summary>
+        /// <returns>The path where the images are stored</returns>
+        private void ApplyKernel()
+        {
+            MainWindowModel context = DataContext as MainWindowModel;
+            string path = context.Options.Path;
+            string kernel = context.Options.KernelSelected;
+
+            Processor processor = new Processor(path, kernel);
+
+            try
+            {
+                double[,] matrix;
+                if (kernel.Equals("Custom"))
+                {
+                    Dictionary<string, double> values = context.Options.CustomMatrix;
+                    matrix = new double[3, 3]
+                    {
+                        { values["a"], values["b"], values["c"] },
+                        { values["d"], values["e"], values["f"] },
+                        { values["g"], values["h"], values["i"] }
+                    };
+                }
+                else
+                {
+                    matrix = SetMatrix(kernel);
+                }
+
+                processor.GenerateImages(matrix);
+
+                ChangeImage("OriginalImg", processor.Original);
+                ChangeImage("GrayScaledImg", processor.GrayScaled);
+                ChangeImage("ResultImg", processor.Applied);
+
+                context.Output.Path = "The results are stores on the directory: " + processor.SavePath;
+                context.Output.Loading = false;
+                context.Output.ShowResult = true;
+            }
+            catch (Exception e)
+            {
+                context.Output.ErrorMsg = "An un expected error ocurred: " + e.Message;
+                context.Output.Loading = false;
+                context.Output.ShowError = true;
+            }
+        }
+
+        /// <summary>Change the image on the screen</summary>
+        /// <param name="name">The name of the component for the image</param>
+        /// <param name="img">The path of the image to show</param>
+        private void ChangeImage(string name, string img)
+        {
+            Image image = this.FindControl<Image>(name);
+            image.Source = new Bitmap(img);
+        }
+
+        /// <summary>Validate the options and create the new image</summary>
         /// <param name="sender">The object that raised the event</param>
         /// <param name="e">The object that is being handled</param>
         private void GenerateNewImage(object sender, RoutedEventArgs e)
         {
             MainWindowModel context = DataContext as MainWindowModel;
             context.Output.Loading = true;
+            context.Output.ShowResult = false;
+            context.Output.ShowError = false;
 
             if (HasValidOptions())
-                System.Console.WriteLine("GENERATE");
+                ApplyKernel();
             else
                 context.Output.ShowError = true;
-            context.Output.Loading = false;
         }
 
         /// <summary>Check if has valid options to applied the kernel</summary>
@@ -60,6 +119,98 @@ namespace Filters.Views.Output
             }
             context.Output.ErrorMsg = "ERROR: Verify that the path exists and is a file";
             return false;
+        }
+
+        /// <summary>Get the correct matrix for the kernel</summary>
+        /// <param name="kernel">The kernel to get the matrix</param>
+        /// <returns>The matrix to use</returns>
+        private double[,] SetMatrix(string kernel)
+        {
+            double[,] matrix;
+
+            if (kernel.Equals("Blurred"))
+            {
+                matrix = new double[3, 3]
+                {
+                    { 0.0625, 0.125, 0.0625 },
+                    { 0.125, 0.25, 0.125 },
+                    { 0.0625, 0.125, 0.0625 }
+                };
+            }
+            else if (kernel.Equals("Enhancement"))
+            {
+                matrix = new double[3, 3]
+                {
+                    { -2, -1, 0 },
+                    { -1, 1, 1 },
+                    { 0, 1, 2 }
+                };
+            }
+            else if (kernel.Equals("LeftS"))
+            {
+                matrix = new double[3, 3]
+                {
+                    { 1, 0, -1 },
+                    { 2, 0, -2 },
+                    { 1, 0, -1 }
+                };
+            }
+            else if (kernel.Equals("LowS"))
+            {
+                matrix = new double[3, 3]
+                {
+                    { -1, -2, -1 },
+                    { 0, 0, 0 },
+                    { 1, 2, 1}
+                };
+            }
+            else if (kernel.Equals("Original"))
+            {
+                matrix = new double[3, 3]
+                {
+                    { 0, 0, 0 },
+                    { 0, 1, 0 },
+                    { 0, 0, 0 }
+                };
+            }
+            else if (kernel.Equals("Outline"))
+            {
+                matrix = new double[3, 3]
+                {
+                    { -1, -1, -1 },
+                    { -1, 8, -1 },
+                    { -1, -1, -1 }
+                };
+            }
+            else if (kernel.Equals("RightS"))
+            {
+                matrix = new double[3, 3]
+                {
+                    { -1, 0, 1 },
+                    { -2, 0, 2 },
+                    { -1, 0, 1 }
+                };
+            }
+            else if (kernel.Equals("Sharpen"))
+            {
+                matrix = new double[3, 3]
+                {
+                    { 0, -1, 0 },
+                    { -1, 5, -1 },
+                    { 0, -1, 0 }
+                };
+            }
+            else
+            {
+                matrix = new double[3, 3]
+                {
+                    { 1, 2, 1},
+                    { 0, 0, 0 },
+                    { -1, -2, -1 }
+                };
+            }
+
+            return matrix;
         }
 
         /// <summary>Check if the file is a PNG image</summary>
