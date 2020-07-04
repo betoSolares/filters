@@ -26,23 +26,31 @@ namespace Filters.Views.Output
 
                 Processor processor = new Processor(path, kernel);
 
-                double[,] matrix;
-                if (kernel.Equals("Custom"))
+                try
                 {
-                    Dictionary<string, double> values = context.Options.CustomMatrix;
-                    matrix = new double[3, 3]
+                    double[,] matrix;
+                    if (kernel.Equals("Custom"))
                     {
-                        { values["a"], values["b"], values["c"] },
-                        { values["d"], values["e"], values["f"] },
-                        { values["g"], values["h"], values["i"] }
-                    };
-                }
-                else
-                {
-                    matrix = SetMatrix(kernel);
-                }
+                        Dictionary<string, double> values = context.Options.CustomMatrix;
+                        matrix = new double[3, 3]
+                        {
+                            { values["a"], values["b"], values["c"] },
+                            { values["d"], values["e"], values["f"] },
+                            { values["g"], values["h"], values["i"] }
+                        };
+                    }
+                    else
+                    {
+                        matrix = SetMatrix(kernel);
+                    }
 
-                processor.GenerateImages(matrix);
+                    processor.GenerateImages(matrix);
+                }
+                catch (Exception e)
+                {
+                    context.Output.ErrorMsg = "An un expected error ocurred: " + e.Message;
+                    context.Output.ShowError = true;
+                }
         }
 
         /// <summary>Validate the options and create the new image</summary>

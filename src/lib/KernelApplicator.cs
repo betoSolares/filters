@@ -28,7 +28,7 @@ namespace ImageProcessing.Applicator
 
             Bitmap grayscaled = converter.FromColorToGray(original);
             double[,] toConvert = ApplyAndNormalize(grayscaled);
-            Bitmap applied = converter.MatrixToBitmap(grayscaled, toConvert, GetMinMaxValues(toConvert));
+            Bitmap applied = converter.MatrixToBitmap(toConvert, GetMinMaxValues(toConvert));
 
             return (grayscaled, applied);
         }
@@ -154,9 +154,9 @@ namespace ImageProcessing.Applicator
         {
             double value = 0;
 
-            for (int y = 0; y < 3; y++)
+            for (int y = 0; y < multiplyValues.GetLength(1); y++)
             {
-                for (int x = 0; x < 3; x++)
+                for (int x = 0; x < multiplyValues.GetLength(0); x++)
                 {
                     value += matrix[x, y] * multiplyValues[x, y];
                 }

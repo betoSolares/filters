@@ -30,7 +30,7 @@ namespace ImageProcessing.Convertion
         /// <param name="matrix">The matrix to convert</param>
         /// <param name="original">The original bitmap to get the alpha value</param>
         /// <returns>The new bitmap</returns>
-        public Bitmap MatrixToBitmap(Bitmap original, double[,] matrix, (double min, double max) limits)
+        public Bitmap MatrixToBitmap(double[,] matrix, (double min, double max) limits)
         {
             Bitmap result = new Bitmap(matrix.GetLength(0), matrix.GetLength(1));
 
@@ -38,9 +38,8 @@ namespace ImageProcessing.Convertion
             {
                 for (int x = 0; x < matrix.GetLength(0); x++)
                 {
-                    int alpha = original.GetPixel(x, y).A;
                     int scaled = Convert.ToInt32(((matrix[x, y] - limits.min) * 255) / (limits.max - limits.min));
-                    Color newColor = Color.FromArgb(alpha, scaled, scaled, scaled);
+                    Color newColor = Color.FromArgb(scaled, scaled, scaled);
                     result.SetPixel(x, y, newColor);
                 }
             }
