@@ -1,3 +1,4 @@
+using Avalonia.Markup.Xaml.Styling;
 using ReactiveUI;
 
 namespace Filters.Models
@@ -20,11 +21,20 @@ namespace Filters.Models
             set => this.RaiseAndSetIfChanged(ref output, value);
         }
 
+        // The current theme of the application
+        private string currentTheme;
+        public string CurrentTheme
+        {
+            get => currentTheme;
+            set => this.RaiseAndSetIfChanged(ref currentTheme, value);
+        }
+
         /// <summary>Constructor</summary>
         public MainWindowModel()
         {
             options = new OptionsModel();
             output = new OutputModel();
+            currentTheme = "Rust";
         }
     }
 }
