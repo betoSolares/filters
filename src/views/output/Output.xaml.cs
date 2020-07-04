@@ -74,12 +74,20 @@ namespace Filters.Views.Output
         {
             MainWindowModel context = DataContext as MainWindowModel;
             context.Output.Loading = true;
+            context.Output.ShowResult = false;
+            context.Output.ShowError = false;
 
             if (HasValidOptions())
+            {
                 ApplyKernel();
+                context.Output.Loading = false;
+                context.Output.ShowResult = true;
+            }
             else
+            {
+                context.Output.Loading = false;
                 context.Output.ShowError = true;
-            context.Output.Loading = false;
+            }
         }
 
         /// <summary>Check if has valid options to applied the kernel</summary>
