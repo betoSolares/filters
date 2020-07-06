@@ -32,7 +32,7 @@ namespace ImageProcessing
         /// <param name="matrix">The custom matrix to apply</param>
         public void GenerateImages(double[,] matrix)
         {
-            KernelApplicator applicator = new KernelApplicator(Original, matrix);
+            KernelApplicator applicator = new KernelApplicator(Original, matrix, Kernel);
             (Bitmap gray, Bitmap applied) bitmaps = applicator.Apply();
 
             string grayPath = Path.Combine(SavePath, filename + "_grayscaled.png");

@@ -132,9 +132,9 @@ namespace Filters.Views.Output
             {
                 matrix = new double[3, 3]
                 {
-                    { 0.0625, 0.125, 0.0625 },
-                    { 0.125, 0.25, 0.125 },
-                    { 0.0625, 0.125, 0.0625 }
+                    { 1, 2, 1 },
+                    { 2, 4, 2 },
+                    { 1, 2, 1 }
                 };
             }
             else if (kernel.Equals("Enhancement"))
