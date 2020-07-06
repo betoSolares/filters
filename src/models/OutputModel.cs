@@ -21,14 +21,6 @@ namespace Filters.Models
             set => this.RaiseAndSetIfChanged(ref errorMsg, value);
         }
 
-        // Show the spinner loader
-        private bool loading;
-        public bool Loading
-        {
-            get => loading;
-            set => this.RaiseAndSetIfChanged(ref loading, value);
-        }
-
         // Show the results
         private bool showResult;
         public bool ShowResult
@@ -50,7 +42,6 @@ namespace Filters.Models
         {
             showError = false;
             errorMsg = "ERROR: Not a valid file";
-            loading = false;
             showResult = false;
             path = "No path yet";
         }

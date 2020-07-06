@@ -37,13 +37,6 @@
                  Name="ErrorTextBox"
                  Text="{Binding Output.ErrorMsg}" />
 
-        <!-- Loader -->
-        <TextBlock HorizontalAlignment="Center"
-                   IsVisible="{Binding Output.Loading}"
-                   Name="Loader"
-                   Text="Loading" />
-
-
         <!-- Results -->
         <Grid IsVisible="{Binding Output.ShowResult}">
             <Grid.ColumnDefinitions>

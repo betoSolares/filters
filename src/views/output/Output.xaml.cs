@@ -53,13 +53,11 @@ namespace Filters.Views.Output
                 ChangeImage("ResultImg", processor.Applied);
 
                 context.Output.Path = "The results are stores on the directory: " + processor.SavePath;
-                context.Output.Loading = false;
                 context.Output.ShowResult = true;
             }
             catch (Exception e)
             {
                 context.Output.ErrorMsg = "An un expected error ocurred: " + e.Message;
-                context.Output.Loading = false;
                 context.Output.ShowError = true;
             }
         }
@@ -79,7 +77,6 @@ namespace Filters.Views.Output
         private void GenerateNewImage(object sender, RoutedEventArgs e)
         {
             MainWindowModel context = DataContext as MainWindowModel;
-            context.Output.Loading = true;
             context.Output.ShowResult = false;
             context.Output.ShowError = false;
 
@@ -132,9 +129,9 @@ namespace Filters.Views.Output
             {
                 matrix = new double[3, 3]
                 {
-                    { 0.0625, 0.125, 0.0625 },
-                    { 0.125, 0.25, 0.125 },
-                    { 0.0625, 0.125, 0.0625 }
+                    { 1, 2, 1 },
+                    { 2, 4, 2 },
+                    { 1, 2, 1 }
                 };
             }
             else if (kernel.Equals("Enhancement"))

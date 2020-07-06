@@ -8,15 +8,18 @@ namespace ImageProcessing.Applicator
     {
         // Properties
         private readonly double[,] matrix;
+        private readonly string kernel;
         private readonly string path;
 
         /// <summary>Constructor</summary>
         /// <param name="path">The path for the image</param>
-        /// <param name="matrix">The matrix to apply</matrix>
-        public KernelApplicator(string path, double[,] matrix)
+        /// <param name="matrix">The matrix to apply</param>
+        /// <param name="kernel">The name of the kernel to apply</param>
+        public KernelApplicator(string path, double[,] matrix, string kernel)
         {
             this.path = path;
             this.matrix = matrix;
+            this.kernel = kernel;
         }
 
         /// <summary>Apply the kernel to the image</summary>
@@ -39,16 +42,28 @@ namespace ImageProcessing.Applicator
         private double[,] ApplyAndNormalize(Bitmap bitmap)
         {
             double[,] matrix = GetInnerValues(bitmap);
-            matrix = FixBorders(bitmap, matrix);
+            matrix = GetBorders(bitmap, matrix);
             matrix = Normalize(matrix);
             return matrix;
+        }
+
+        /// <summary>Get the average value from the pixel</summary>
+        /// <param name="bitmap">The bitmap to get the average value</param>
+        /// <param name="x">The x position of the pixel</param>
+        /// <param name="y">The y position of the pixel</param>
+        /// <returns>The average value from the pixel</returns>
+        private double GetAverage(Bitmap bitmap, int x, int y)
+        {
+            Color pixel = bitmap.GetPixel(x, y);
+            double value = (pixel.R + pixel.G + pixel.B) / 3;
+            return value;
         }
 
         /// <summary>Fix the border issue</summary>
         /// <param name="bitmap">The original bitmap to get the values</param>
         /// <param name="values">The matrix containing the new values to save the borders</param>
         /// <returns>A new matrix with the borders and values for the new bitmap</returns>
-        private double[,] FixBorders(Bitmap bitmap, double[,] values)
+        private double[,] GetBorders(Bitmap bitmap, double[,] values)
         {
             int width = bitmap.Width;
             int height = bitmap.Height;
@@ -133,18 +148,6 @@ namespace ImageProcessing.Applicator
             }
 
             return values;
-        }
-
-        /// <summary>Get the average value from the pixel</summary>
-        /// <param name="bitmap">The bitmap to get the average value</param>
-        /// <param name="x">The x position of the pixel</param>
-        /// <param name="y">The y position of the pixel</param>
-        /// <returns>The average value from the pixel</returns>
-        private double GetAverage(Bitmap bitmap, int x, int y)
-        {
-            Color pixel = bitmap.GetPixel(x, y);
-            double value = (pixel.R + pixel.G + pixel.B) / 3;
-            return value;
         }
 
         /// <summary>Get the new central value</summary>
@@ -232,13 +235,17 @@ namespace ImageProcessing.Applicator
         private double[,] Normalize(double[,] values)
         {
             double[,] normalized = new double[values.GetLength(0), values.GetLength(1)];
-            (double min, double max) limits = GetMinMaxValues(values);
 
             for (int y = 0; y < values.GetLength(1); y++)
             {
                 for (int x = 0; x < values.GetLength(0); x++)
                 {
-                    normalized[x, y] = values[x, y] / (limits.max - limits.min);
+                    if (kernel.Equals("Blurred"))
+                        normalized[x, y] = values[x, y] / 16;
+                    else if (kernel.Equals("Enhancement") || kernel.Equals("Sharpen") || kernel.Equals("Original"))
+                        normalized[x, y] = values[x, y];
+                    else
+                        normalized[x, y] = Math.Sqrt(Math.Pow(values[x, y], 2));
                 }
             }
 
