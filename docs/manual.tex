@@ -1,5 +1,9 @@
 \documentclass[12pt]{article}
 
+% References
+\usepackage[backend=biber,citestyle=alphabetic,bibstyle=authortitle,style=numeric]{biblatex}
+\addbibresource{manual.bib}
+
 % Clickable links
 \usepackage[colorlinks=true,linkcolor=black,anchorcolor=black,citecolor=black,filecolor=black,menucolor=black,runcolor=black,urlcolor=black]{hyperref}
 
@@ -189,6 +193,11 @@ Con la única diferencia de que para el filtro Blur se utiliza la matriz no norm
 Luego de que se ha generado la imagen veras los resultados de todo el proceso así como un mensaje indicando en donde
  han sido guardadas las imágenes. \\
 
+
 \includegraphics[width=\textwidth]{results}
+
+\newpage
+\nocite{*}
+\printbibliography
 
 \end{document}
