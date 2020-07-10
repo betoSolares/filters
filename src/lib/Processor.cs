@@ -51,9 +51,9 @@ namespace ImageProcessing
             string current = Directory.GetCurrentDirectory();
 
             string save;
-            if (current.Contains(Path.Combine("filters", "src", "bin", "Debug", "netcoreapp3.0")))
+            if (current.Contains(Path.Combine("src", "bin", "Debug", "netcoreapp3.0")))
                 save = Path.Combine(Directory.GetParent(current).Parent.Parent.FullName, "src/results");
-            else if (current.Contains(Path.Combine("filters", "src", "bin", "Release", "netcoreapp3.0")))
+            else if (current.Contains(Path.Combine("src", "bin", "Release", "netcoreapp3.0")))
                 save = Path.Combine(Directory.GetParent(current).Parent.Parent.FullName, "src/results");
             else
                 save = Path.Combine(current, "src/results");
