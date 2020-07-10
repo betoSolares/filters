@@ -24,9 +24,9 @@ namespace Filters.Views.Options
             string current = Directory.GetCurrentDirectory();
 
             string target;
-            if (current.Contains(Path.Combine("filters", "src", "bin", "Debug", "netcoreapp3.0")))
+            if (current.Contains(Path.Combine("src", "bin", "Debug", "netcoreapp3.0")))
                 target = Directory.GetParent(current).Parent.Parent.FullName + img;
-            else if (current.Contains(Path.Combine("filters", "src", "bin", "Release", "netcoreapp3.0")))
+            else if (current.Contains(Path.Combine("src", "bin", "Release", "netcoreapp3.0")))
                 target = Directory.GetParent(current).Parent.Parent.FullName + img;
             else
                 target = Path.Combine(current, "src" + img);

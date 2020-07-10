@@ -26,10 +26,9 @@ namespace Filters.Views.Output
             string path = context.Options.Path;
             string kernel = context.Options.KernelSelected;
 
-            Processor processor = new Processor(path, kernel);
-
             try
             {
+                Processor processor = new Processor(path, kernel);
                 double[,] matrix;
                 if (kernel.Equals("Custom"))
                 {
